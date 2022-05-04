@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
+        <div class = "alert">
+            {{ message }}
+        </div>
+    {%- endfor %}
+    <form action = "{{ request.path }}" method = "post">
+    <input type="number" value="{{id}}" name="user_id" style="display: none;">
+        <label for="sujet">Sujet:</label><br>
+        <input type="text" maxlength="30" name="sujet">
+        <br><br>
+        <label for="objet">Message:</label><br>
+        <input type="text" maxlength="1000" name="objet">
+        <br><br>
+        <button type="submit">Continue</button>
+    </form>
+    <br>
+    <table class="table table-striped">
+        <tr>
+            <th class="text-center">Objet</th>
+            <th class="text-center">Utilisateur</th>
+            <th class="text-center">Admin prise en charge</th>
+            <th class="text-center">Etat</th>
+            <th class="text-center">Voir</th>
+        </tr>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ticket.objet}}</td>
+                <td>{{ticket.user.username}}</td>
+                <td>{{ticket.admin_id}}</td>
+                <td>
+
+                    {%if ticket.etat=="1"%} 
+                        <div class="bg-danger text-light">En attente</div>
+                    {% elif ticket.etat=="2"%}
+                        <div class="bg-warning text-light">En cours</div>
+                    {% elif ticket.etat=="3"%}
+                        <div class="bg-success text-light">Fermé</div>
+                    {%endif%}
+                </td>
+                <td> <button onclick="window.location.href = '/voirticket?arg1={{ticket.id}}';">Voir</button> </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

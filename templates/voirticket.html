@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table>
+    {% for ticket in tickets %}
+        <div><span>Objet: <br></span><span>{{ticket.objet}}</span></div>
+        <div><span>Utilisateur: <br></span><span>{{ticket.user.username}}</span></div>
+        <div><span>Sujet: <br></span><span>{{ticket.sujet}}</span></div>
+    {% endfor %}
+</table>
+<form action = "{{ request.path }}" method = "post">
+<input type="text" name="reponse" maxlength="1000">
+<button type="submit">Répondre</button>
+<div style="display: none;"><input type="number" name="id" value="{{id_ticket}}"></div>
+</form>
+{% for reponse in reponses %}
+
+{{reponse.reponse}}
+
+{% endfor %}
+{% endblock %}
