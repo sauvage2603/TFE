@@ -8,12 +8,12 @@
     <form action = "{{ request.path }}" method = "post">
     <input type="number" value="{{id}}" name="user_id" style="display: none;">
         <label for="sujet">Sujet:</label><br>
-        <input type="text" maxlength="30" name="sujet">
+        <input type="text" maxlength="30" name="sujet" id="sujet">
         <br><br>
         <label for="objet">Message:</label><br>
-        <input type="text" maxlength="1000" name="objet">
+        <input type="text" maxlength="1000" name="objet" id="objet">
         <br><br>
-        <button type="submit">Continue</button>
+        <button type="submit">Envoyer</button>
     </form>
     <br>
     <table class="table table-striped">

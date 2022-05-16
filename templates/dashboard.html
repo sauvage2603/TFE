@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if current_user.admin == "1" %}
+                                  
+    <h1 class="title">
+      Pannel administrateur
+    </h1>
+    <button onclick="window.location.href = '/ticketadmin';">Ticket</button>
+    {% else %}
+    <div class="alert alert-danger" role="alert">vous n'avez pas les droits</div>
+  {% endif %}
+{% endblock %}

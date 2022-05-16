@@ -37,4 +37,14 @@ def voirticket():
             db.session.add(reponse)
             db.session.commit()
             return redirect('/voirticket?arg1='+str(request.form["id"]))
-    return render_template('voirticket.html', name=current_user.name,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket),id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket))    
+    return render_template('voirticket.html', name=current_user.name,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket),id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket)) 
+@main.route('/dashboard')
+@login_required
+def dashboard():
+
+    return render_template('dashboard.html')
+@main.route('/ticketadmin')
+@login_required
+def ticketadmin():
+
+    return render_template('ticketadmin.html')

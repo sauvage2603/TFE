@@ -8,23 +8,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sauvageland</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styl.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
 </head>
 
 <body>
     <section class="hero is-primary is-fullheight">
-
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
 
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
+                            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                                Home
+                            </a>
                             {% if current_user.is_authenticated %}
-                                <a href="{{ url_for('main.index') }}" class="navbar-item">
-                                    Home
-                                </a>
                                 <a href="{{ url_for('main.profile') }}" class="navbar-item">
                                     Profile
                                 </a>
@@ -34,12 +33,19 @@
                                 
                                 <!-- Vue de l'admin uniquement -->
                                 {% if current_user.admin == "1" %}
-
+                                <a href="{{ url_for('main.dashboard') }}" class="navbar-item">
+                                    Admin
+                                 </a>
                                 {% endif %}
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
                                 <a href="{{ url_for('auth.logout') }}" class="navbar-item">
                                     Logout
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                                    Register
+                                </a>
+                                <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                                   Login
                                 </a>
                             {% endif %}
                         </div>
