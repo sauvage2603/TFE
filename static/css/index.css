@@ -1,0 +1,15 @@
+.hero-body{
+    background-image: url("/static/image/bg.jpeg");
+    background-attachment:fixed;
+    background-position:center center;
+}
+#rejoindre{
+    font-size: large;
+}
+#ip{
+    border: solid black;
+    border-radius: 50%;
+    background-color:darkslategrey;
+    color: white;
+    padding: 1em;
+}

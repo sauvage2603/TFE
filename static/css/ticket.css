@@ -1,0 +1,12 @@
+.hero-body{
+    background-image: url("/static/image/bg_ticket.jpg");
+    background-attachment:fixed;
+    background-position:center center;
+}
+table{
+    width: 100%;
+}
+.responsive_table{
+    width: 100%;
+    overflow: auto;
+}

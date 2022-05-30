@@ -7,7 +7,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
     admin= db.Column(db.String(1))
-    log = db.relationship('Ticket', backref='user')
+    ticket = db.relationship('Ticket',backref='user')
 
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,8 +28,10 @@ class Ticket(db.Model):
 class Reponse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     reponse= db.Column(db.String(1000), nullable=False)
+    user = db.Column(db.String(1000),nullable=False)
     id_reponse=db.Column(db.Integer, db.ForeignKey('ticket.id'),nullable=False)
 
-    def __init__(self,reponse,id_reponse):
+    def __init__(self,reponse,user,id_reponse):
         self.reponse = reponse
+        self.user = user
         self.id_reponse = id_reponse

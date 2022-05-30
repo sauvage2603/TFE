@@ -1,21 +1,37 @@
 {% extends "base.html" %}
-
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/voirticket.css') }}" />
+{% endblock %}
 {% block content %}
-<table>
+<table class="table table-striped table-bordered border border-danger shadow p-3 mb-5 bg-body rounded table-hover">
     {% for ticket in tickets %}
-        <div><span>Objet: <br></span><span>{{ticket.objet}}</span></div>
-        <div><span>Utilisateur: <br></span><span>{{ticket.user.username}}</span></div>
-        <div><span>Sujet: <br></span><span>{{ticket.sujet}}</span></div>
+    <tr><td><span>Sujet:</span></td><td><span>{{ticket.sujet}}</span></td></tr>
+    <tr><td><span>Utilisateur: <br></td><td><span>{{ticket.user.username}}</span></td></tr>
+    <tr><td><span>Objet: </span></td><td><span>{{ticket.objet}}</span></td></tr>
     {% endfor %}
 </table>
 <form action = "{{ request.path }}" method = "post">
-<input type="text" name="reponse" maxlength="1000">
+    <textarea name="reponse" id="reponse" rows="10"cols="10" spellcheck="true" wrap="hard"> </textarea>
+<br>
+<br>
 <button type="submit">Répondre</button>
 <div style="display: none;"><input type="number" name="id" value="{{id_ticket}}"></div>
 </form>
+<br>
+<table class="table table-striped table-hover">
+    <tr class="text-center">
+    <th></th>
+    <th>Pseudo</th>
+    <th>Réponse</th>
+    </tr>
 {% for reponse in reponses %}
-
+<tr>
+    <td><img src="https://mc-heads.net/head/{{reponse.user}}" alt="{{reponse.user}}" style="height: 30px;"></td>
+    <td class="break">{{reponse.user}}</td>
+<td>
 {{reponse.reponse}}
-
+</td>
+</tr>
 {% endfor %}
+</table>
 {% endblock %}

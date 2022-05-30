@@ -1,5 +1,22 @@
 {% extends "base.html" %}
-
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
 {% block content %}
-<h1>Index</h1>
+<body>
+    <div id="rejoindre">
+        <h1 class="display-1">SAUVAGELAND</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1>REJOIGNEZ SAUVAGELAND</h1>
+        <h1>COMMENCEZ VOTRE AVENTURE</h1>
+        <p id="ip">
+            Version 1.18.1 <br>
+            ip: sauvageland.mine.fun
+        </p>
+    </div>
+</body>
 {% endblock %}
