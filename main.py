@@ -136,3 +136,5 @@ def priseticket():
     db.session.flush()
     db.session.commit()
     return redirect('/voirticket?arg1='+id_ticket)
+if __name__ == "__main__":
+    main.run(ssl_context='adhoc')

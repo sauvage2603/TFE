@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Thanks for your order!</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <section>
+{% extends "base.html" %}
+{% block content %}
+    <h1>🎉Merci de votre achats!🎉</h1>
     <p>
-      We appreciate your business! If you have any questions, please email
-      <a href="mailto:orders@example.com">orders@example.com</a>.
+      Si vous avez des questions, veuillez creer un ticket.
+      <a href="/ticket">Ici</a>.
     </p>
-  </section>
-</body>
-</html>
+
+{%endblock%}

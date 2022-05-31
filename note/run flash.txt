@@ -1,4 +1,4 @@
-$env:FLASK_APP = "TFE"
+    $env:FLASK_APP = "TFE"
 $env:FLASK_ENV = "development"
 cd ..
 python -m flask run

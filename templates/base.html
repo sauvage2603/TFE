@@ -54,7 +54,7 @@
             {% endif %}
             <li class="nav-item">
             <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                Logout
+                Déconnexion
             </a>
         </li>
             <li class="nav-item">
@@ -65,12 +65,12 @@
         {% else %}
         <li class="nav-item">
             <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                Register
+                S'inscrire
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ url_for('auth.login') }}" class="navbar-item">
-               Login
+                Me connecter
             </a>
         </li>
         {% endif %}
