@@ -41,17 +41,40 @@ def voirticket():
             db.session.add(reponse)
             db.session.commit()
             return redirect('/voirticket?arg1='+str(request.form["id"]))
-    return render_template('voirticket.html', name=current_user.name,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket),id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket)) 
+    if current_user.admin == "1":
+        tickets=Ticket.query.filter_by(id=id_ticket)
+    else:
+        tickets=Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket)
+    return render_template('voirticket.html', name=current_user.name,id = current_user.id,tickets = tickets,id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket),admin=current_user.admin) 
 @main.route('/dashboard')
 @login_required
 def dashboard():
 
     return render_template('dashboard.html')
-@main.route('/ticketadmin')
+@main.route('/ticketadmin',methods = ['GET', 'POST'])
 @login_required
 def ticketadmin():
-
-    return render_template('ticketadmin.html')
+    if current_user.admin =="1":
+        etats=Ticket.query.filter_by()
+        if request.method == 'POST':
+            filtre = request.form["filtre-select"]
+            if request.form["admin-select"] == "1":
+                admin = "null"
+            elif request.form["admin-select"] == "2":
+                admin = current_user.username
+            elif request.form["admin-select"] == "3":
+                admin ="1"
+            if admin == "1":
+                if filtre != "4":
+                    etats=Ticket.query.filter_by(etat=filtre)
+                else:
+                    etats=Ticket.query.filter_by()
+            else:
+                if filtre != "4":
+                    etats=Ticket.query.filter_by(etat=filtre).filter_by(admin=admin)
+                else:
+                    etats=Ticket.query.filter_by(admin=admin)
+    return render_template('ticketadmin.html',etats = etats)
 
 @main.route('/shop')
 @login_required
@@ -81,12 +104,18 @@ def buy_vip():
 @login_required
 def close():
     id_ticket = request.args.get('arg1')
-    update = Ticket.query.filter_by(id=id_ticket).first()
+    if current_user.admin=="1":
+        update = Ticket.query.filter_by(id=id_ticket).first()
+    else:
+        update = Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket).first()
     update.etat="3"
     db.session.merge(update)
     db.session.flush()
     db.session.commit()
-    return render_template('ticket.html', name=current_user.name,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).order_by(Ticket.id.desc()))
+    if request.args.get('arg2') == "admin" and current_user.admin=="1":
+        return redirect('/ticketadmin')
+    else:
+        return redirect('/ticket')
 
 @main.route('/test')
 def test():
@@ -94,3 +123,16 @@ def test():
 @main.route('/successvip')
 def successvip():
     return render_template('successvip.html')
+
+@main.route('/priseticket')
+@login_required
+def priseticket():
+    id_ticket = request.args.get('arg1')
+    if current_user.admin=="1":
+        update = Ticket.query.filter_by(id=id_ticket).first()
+    update.admin=current_user.username
+    update.etat="2"
+    db.session.merge(update)
+    db.session.flush()
+    db.session.commit()
+    return redirect('/voirticket?arg1='+id_ticket)

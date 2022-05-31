@@ -1,10 +1,69 @@
 {% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ticketadmin.css') }}">
+{% endblock %}
 {% block content %}
     {% if current_user.admin == "1" %}
                                     
         <h1 class="title">
         Ticket administrateur
-        </h1>
+    </h1>
+        <form action = "{{ request.path }}" method = "post">
+            <div class="responsive_table">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th class="text-center">Sujet</th>
+                <th class="text-center">Utilisateur</th>
+                <th class="text-center">Admin prise en charge</th>
+                <th class="text-center">Etat</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <select name="admin-select" id="admin-select" class="form-select form-select-sm">
+                        <option value="1">Aucun</option>
+                        <option value="2">Sois même</option>
+                        <option value="3">Tous</option>
+                    </select></td>
+                <td>
+                    <select name="filtre-select" id="filtre-select" class="form-select form-select-sm">
+                        <option value="1">En attente</option>
+                        <option value="2">En cour</option>
+                        <option value="3">Fermé</option>
+                        <option value="4">Tous</option>
+                    </select></td>
+                <td><button type="submit" class="btn btn-outline-primary btn-sm">OK</button></td>
+            </tr>
+        </form>
+        {% for etat in etats %}
+        <tr>
+            <td>{{etat.sujet}}</td>
+            <td>{{etat.user.username}}</td>
+            <td>{{etat.admin}}</td>
+            <td>
+
+                {%if etat.etat=="1"%} 
+                    <div class="bg-danger text-light">En attente</div>
+                {% elif etat.etat=="2"%}
+                    <div class="bg-warning text-light">En cours</div>
+                {% elif etat.etat=="3"%}
+                    <div class="bg-success text-light">Fermé</div>
+                {%endif%}
+            </td>
+            <td><a href="/voirticket?arg1={{etat.id}}&arg2=admin" class="btn btn-outline-primary btn-sm">Voir</a></td>
+            {% if etat.etat!="3"%}
+            <td><a href="/close?arg1={{etat.id}}&arg2=admin" class="btn btn-outline-danger btn-sm">Fermé</a></td>
+            {%endif%}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+        
     {% else %}
         <div class="alert alert-danger" role="alert">vous n'avez pas les droits</div>
     {% endif %}

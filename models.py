@@ -14,15 +14,15 @@ class Ticket(db.Model):
     sujet = db.Column(db.String(30), nullable=False)
     objet = db.Column(db.String(1000), nullable=False)
     user_id=db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    admin_id=db.Column(db.Integer)
+    admin=db.Column(db.String(100))
     etat=db.Column(db.String(20),nullable=False)
     id_reponse = db.relationship('Reponse', backref='ticket')
 
-    def __init__(self, sujet,objet,user_id,admin_id,etat):
+    def __init__(self, sujet,objet,user_id,admin,etat):
       self.sujet = sujet
       self.objet = objet
       self.user_id = user_id
-      self.admin_id = admin_id
+      self.admin = admin
       self.etat=etat
 
 class Reponse(db.Model):
