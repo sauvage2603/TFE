@@ -17,7 +17,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name, username=current_user.username)
+    return render_template('profile.html', name=current_user.email, username=current_user.username)
 @main.route('/ticket',methods = ['GET', 'POST'])
 @login_required
 def ticket():
@@ -28,7 +28,7 @@ def ticket():
             ticket=Ticket(request.form["sujet"],request.form["objet"],request.form["user_id"],"null","1"    )
             db.session.add(ticket)
             db.session.commit()
-    return render_template('ticket.html', name=current_user.name,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).order_by(Ticket.id.desc()))
+    return render_template('ticket.html', name=current_user.email,id = current_user.id,tickets = Ticket.query.filter_by(user_id=current_user.id).order_by(Ticket.id.desc()))
 @main.route('/voirticket',methods = ['GET', 'POST'])
 @login_required
 def voirticket():
@@ -45,7 +45,7 @@ def voirticket():
         tickets=Ticket.query.filter_by(id=id_ticket)
     else:
         tickets=Ticket.query.filter_by(user_id=current_user.id).filter_by(id=id_ticket)
-    return render_template('voirticket.html', name=current_user.name,id = current_user.id,tickets = tickets,id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket),admin=current_user.admin) 
+    return render_template('voirticket.html', name=current_user.email,id = current_user.id,tickets = tickets,id_ticket=id_ticket,reponses = Reponse.query.filter_by(id_reponse=id_ticket),admin=current_user.admin) 
 @main.route('/dashboard')
 @login_required
 def dashboard():
@@ -130,11 +130,11 @@ def priseticket():
     id_ticket = request.args.get('arg1')
     if current_user.admin=="1":
         update = Ticket.query.filter_by(id=id_ticket).first()
-    update.admin=current_user.username
-    update.etat="2"
-    db.session.merge(update)
-    db.session.flush()
-    db.session.commit()
+        update.admin=current_user.username
+        update.etat="2"
+        db.session.merge(update)
+        db.session.flush()
+        db.session.commit()
     return redirect('/voirticket?arg1='+id_ticket)
 if __name__ == "__main__":
     main.run(ssl_context='adhoc')
