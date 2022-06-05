@@ -4,12 +4,16 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from flask_mail import Mail, Message
+import os
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
+    #clé aléatoire utilisée pour crypter vos cookies et enregistrer leur envoi au navigateur.
+    app.config['SECRET_KEY'] = os.urandom(24)
+    #l'emplacement de la base de données
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    #permet d'activer le debug de la base de donnée
     app.config['SQLALCHEMY_ECHO'] = True
     db.init_app(app)
 
